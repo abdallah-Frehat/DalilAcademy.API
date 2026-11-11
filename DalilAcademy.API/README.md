@@ -38,5 +38,5 @@ JWT Authentication, dynamic file uploads, EF Core with PostgreSQL, and Third-Par
 
 1. **Clone the repository:**
   
-   git clone [https://github.com/YOUR_USERNAME/DalilAcademy.API.git](https://github.com/YOUR_USERNAME/DalilAcademy.API.git)
+   git clone [https://github.com/abdallah-Frehat/DalilAcademy.API.git](https://github.com/YOUR_USERNAME/DalilAcademy.API.git)
    cd DalilAcademy.API

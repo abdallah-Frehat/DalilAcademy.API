@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DalilAcademy.Core")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+df4c7318d3b3715867860002ea63465f0d3ff66d")]
 [assembly: System.Reflection.AssemblyProductAttribute("DalilAcademy.Core")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DalilAcademy.Core")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
