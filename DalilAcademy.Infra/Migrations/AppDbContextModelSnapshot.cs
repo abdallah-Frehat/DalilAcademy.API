@@ -71,12 +71,22 @@ namespace DalilAcademy.Infra.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasDefaultValueSql("now()");
 
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
                     b.Property<int>("StudentId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("UserId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CourseId");
+
+                    b.HasIndex("UserId");
 
                     b.HasIndex("StudentId", "CourseId")
                         .IsUnique();
@@ -108,6 +118,55 @@ namespace DalilAcademy.Infra.Migrations
                         .IsUnique();
 
                     b.ToTable("Instructors");
+                });
+
+            modelBuilder.Entity("DalilAcademy.Core.Entities.Payment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal>("AmountJod")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<decimal>("AmountUsd")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<DateTime?>("CompletedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Currency")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("character varying(10)");
+
+                    b.Property<int>("EnrollmentId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("PayPalOrderId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EnrollmentId");
+
+                    b.HasIndex("PayPalOrderId")
+                        .IsUnique();
+
+                    b.ToTable("Payments");
                 });
 
             modelBuilder.Entity("DalilAcademy.Core.Entities.Student", b =>
@@ -202,9 +261,24 @@ namespace DalilAcademy.Infra.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("DalilAcademy.Core.Entities.User", null)
+                        .WithMany("Enrollments")
+                        .HasForeignKey("UserId");
+
                     b.Navigation("Course");
 
                     b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("DalilAcademy.Core.Entities.Payment", b =>
+                {
+                    b.HasOne("DalilAcademy.Core.Entities.Enrollment", "Enrollment")
+                        .WithMany("Payments")
+                        .HasForeignKey("EnrollmentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Enrollment");
                 });
 
             modelBuilder.Entity("DalilAcademy.Core.Entities.Student", b =>
@@ -223,12 +297,22 @@ namespace DalilAcademy.Infra.Migrations
                     b.Navigation("Enrollments");
                 });
 
+            modelBuilder.Entity("DalilAcademy.Core.Entities.Enrollment", b =>
+                {
+                    b.Navigation("Payments");
+                });
+
             modelBuilder.Entity("DalilAcademy.Core.Entities.Instructor", b =>
                 {
                     b.Navigation("Courses");
                 });
 
             modelBuilder.Entity("DalilAcademy.Core.Entities.Student", b =>
+                {
+                    b.Navigation("Enrollments");
+                });
+
+            modelBuilder.Entity("DalilAcademy.Core.Entities.User", b =>
                 {
                     b.Navigation("Enrollments");
                 });

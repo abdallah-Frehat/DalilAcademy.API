@@ -24,6 +24,10 @@ namespace DalilAcademy.Infra.Data.Configuration
             builder.Property(e => e.EnrolledAt)
                    .IsRequired()
                    .HasDefaultValueSql("now()");
+            builder.Property(e => e.Status)
+               .HasConversion<string>()
+               .HasMaxLength(20)
+              .IsRequired();
         }
     }
 }
