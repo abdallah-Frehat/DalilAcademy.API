@@ -83,6 +83,4 @@ Apply Entity Framework Core migrations to set up your PostgreSQL database schema
  convert (1 JOD = 1.41 USD),
  and create a PayPal OrderPOST/api/Payments/capture-orderCapture PayPal Order,
  mark Payment Completed, 
- and update Enrollment to Paid(Note: If you implemented any of the optional Bonus features—such as Course 
- Capacity,
- 
+ and update Enrollment to Paid.
