@@ -21,21 +21,23 @@ namespace DalilAcademy.API.Controllers
 
     public class CoursesController(ICourseService courseService, IImageService images) : ControllerBase
     {
-        
+
         [HttpGet("paged")]
         public async Task<ActionResult<PageResult<CourseResponseDTO>>> GetPagedAsync(
-            [FromQuery] int page = 1,
-            [FromQuery] int pageSize = 10,
-            [FromQuery] decimal? minPrice = null,
-            [FromQuery] decimal? maxPrice = null)
+             [FromQuery] int page = 1,
+             [FromQuery] int pageSize = 10,
+             [FromQuery] decimal? minPrice = null,
+             [FromQuery] decimal? maxPrice = null,
+             [FromQuery] string? search = null)
         {
-            page = Math.Max(page, 1);
-            pageSize = Math.Clamp(pageSize, 1, 50);
+            {
+                page = Math.Max(page, 1);
+                pageSize = Math.Clamp(pageSize, 1, 50);
 
-            var result = await courseService.GetPagedAsync(page, pageSize, minPrice, maxPrice);
-            return Ok(result);
+                var result = await courseService.GetPagedAsync(page, pageSize, minPrice, maxPrice, search);
+                return Ok(result);
+            }
         }
-        
     
         //private readonly ICourseService _courseService;
         //public CoursesController(ICourseService courseService)
@@ -52,7 +54,6 @@ namespace DalilAcademy.API.Controllers
         [AllowAnonymous]
         //public async Task<ActionResult<List<Course> GetAll() دون استخدام  ال DTO
         public async Task<ActionResult<List<CourseResponseDTO>>> GetAll()
-
         {
             var courses = await courseService.GetAllAsync();
             return Ok(courses);

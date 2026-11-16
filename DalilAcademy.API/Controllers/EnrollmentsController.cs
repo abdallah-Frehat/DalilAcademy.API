@@ -15,7 +15,7 @@ namespace DalilAcademy.API.Controllers
     [ApiController]
     [Authorize]
 
-    public class EnrollmentsController(IEnrollmentService enrollmentService, AppDbContext db) : ControllerBase
+    public class EnrollmentsController(IEnrollmentService enrollmentService,IPaymentService paymentService, AppDbContext db) : ControllerBase
     {
         //private readonly EnrollmentService _enrollmentService;
         //public EnrollmentsController(EnrollmentService enrollmentService)
@@ -115,6 +115,12 @@ namespace DalilAcademy.API.Controllers
         ))
         .ToListAsync();
             return Ok(enrollments);
+        }
+        [HttpGet("{id}/payments")]
+        public async Task<ActionResult<IEnumerable<PaymentResponseDto>>> GetEnrollmentPayments(int id)
+        {
+            var payments = await paymentService.GetPaymentsByEnrollmentIdAsync(id);
+            return Ok(payments);
         }
 
     }

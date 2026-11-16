@@ -1,4 +1,5 @@
 using DalilAcademy.API.Middleware;
+using DalilAcademy.Core.Interfaces;
 using DalilAcademy.Core.Repository;
 using DalilAcademy.Core.Security;
 using DalilAcademy.Core.Service;
@@ -8,6 +9,7 @@ using DalilAcademy.Infra.Data;
 using DalilAcademy.Infra.Repository;
 using DalilAcademy.Infra.Security;
 using DalilAcademy.Infra.Service;
+using DalilAcademy.Infra.Services;
 using DalilAcademy.Infra.Storage;
 using FluentValidation;
 using FluentValidation.AspNetCore;
@@ -111,9 +113,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
     builder.Services.AddAuthorization();
 //تخزين  ال wwwroot Images  في ال API
 builder.Services.AddSingleton<IImageService, LocalImageService>();
-
-
-
+//-------------------------------------------------------------- تسجيل  الباي بال
+builder.Services.AddHttpClient<IPaymentGateway, PayPalPaymentGateway>();
+builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
+builder.Services.AddScoped<IPaymentService, PaymentService>();
+builder.Services.AddHttpClient<IPaymentGateway, PayPalPaymentGateway>();
 
 var app = builder.Build();//-------------------------Line
 if (app.Environment.IsDevelopment())
